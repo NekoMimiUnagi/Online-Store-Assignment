@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Pantry - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='json' hidden>pantry</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#riceandgrains">Rice and Grains</a>
+        <a href="#cannedgoods">Canned Goods</a>
+        <a href="#spicesandseasonings">Spices and Seasonings</a>
+        <a href="">Canned Vegetable</a>
+        <a href="">Condiments</a>
+        <a href="">Peanut Butter & Spread</a>
+        <a href="">Pasta & Pizza</a>
+        <a href="#allitems">Rollback</a>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Pantry Essentials</h3>
+        <p>Explore our range of pantry staples and essentials:</p>
+        
+        <div class="product" id="riceandgrains" inventory=3>
+            <img src="imgs/pantry/rice-and-grains.jpg" alt="Rice and Grains">
+            <div class="description">
+                <h4>Rice and Grains</h4>
+                <p>High-quality rice and grains for your everyday cooking.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="cannedgoods" inventory=3>
+            <img src="imgs/pantry/canned-food.jpg" alt="Canned Goods">
+            <div class="description">
+                <h4>Canned Goods</h4>
+                <p>A variety of canned goods for your convenience.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="spicesandseasonings" inventory=3>
+            <img src="imgs/pantry/spices-and-seasonings.jpg" alt="Spices and Seasonings">
+            <div class="description">
+                <h4>Spices and Seasonings</h4>
+                <p>Spice up your dishes with our premium spices and seasonings.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

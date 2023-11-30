@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<allproducts>
+    <products category="fresh">
+        <title>Fresh in Grocery</title>
+        <description>Explore our selection of the freshest groceries below:</description>
+        <product category="fruits">
+            <inventory>3</inventory>
+            <name>Organic Banana</name>
+            <description>Fresh and organic fruits handpicked for you.</description>
+            <price>0.99</price>
+            <image>imgs/fresh/organic-banana.jpg</image>
+        </product>
+        <product category="vegetables">
+            <inventory>3</inventory>
+            <name>Organic Spinach</name>
+            <description>A variety of green and leafy vegetables.</description>
+            <price>0.99</price>
+            <image>imgs/fresh/organic-spinach.jpg</image>
+        </product>
+        <product category="dairy">
+            <inventory>3</inventory>
+            <name>Farm-Fresh Eggs</name>
+            <description>Locally sourced, farm-fresh eggs.</description>
+            <price>0.99</price>
+            <image>imgs/fresh/farm-fresh-eggs.jpg</image>
+        </product>
+    </products>
+    <products category="frozen">
+        <title>Frozen Foods</title>
+        <description>Discover our wide range of frozen food products:</description>
+        <product category="pizza">
+            <inventory>3</inventory>
+            <name>Frozen Pizza</name>
+            <description>Delicious frozen pizzas for a quick meal.</description>
+            <price>0.99</price>
+            <image>imgs/frozen/frozen-pizza.jpg</image>
+        </product>
+        <product category="icecream">
+            <inventory>3</inventory>
+            <name>Ice Cream</name>
+            <description>Indulge in our creamy and delightful ice cream flavors.</description>
+            <price>0.99</price>
+            <image>imgs/frozen/ice-cream.jpg</image>
+        </product>
+        <product category="vegetables">
+            <inventory>3</inventory>
+            <name>Frozen Vegetables</name>
+            <description>Convenient and nutritious frozen vegetable options.</description>
+            <price>0.99</price>
+            <image>imgs/frozen/frozen-vegetables.jpg</image>
+        </product>
+    </products>
+    <products category="candy">
+        <title>Delicious Candy Selection</title>
+        <description>Indulge in our wide variety of sweet treats:</description>
+        <product category="gummybears">
+            <inventory>3</inventory>
+            <name>Gummy Bears</name>
+            <description>Chewy and fruity gummy bears in various flavors.</description>
+            <price>0.99</price>
+            <image>imgs/candy/gummy-bears.jpg</image>
+        </product>
+        <product category="chocolatetruffles">
+            <inventory>3</inventory>
+            <name>Chocolate Truffles</name>
+            <description>Decadent chocolate truffles for a luxurious treat.</description>
+            <price>0.99</price>
+            <image>imgs/candy/chocolate-truffles.jpg</image>
+        </product>
+        <product category="lollipops">
+            <inventory>3</inventory>
+            <name>Lollipops</name>
+            <description>Colorful and delightful lollipops for all ages.</description>
+            <price>0.99</price>
+            <image>imgs/candy/lollipops.jpg</image>
+        </product>
+    </products>
+    <products category="snacks">
+        <title>Snacks Galore</title>
+        <description>Explore our delicious snack options:</description>
+        <product category="chipsandpretzels">
+            <inventory>3</inventory>
+            <name>Chips and Pretzels</name>
+            <description>A wide variety of savory chips and pretzels for your cravings.</description>
+            <price>0.99</price>
+            <image>imgs/snacks/chips-and-pretzels.jpg</image>
+        </product>
+        <product category="trailmix">
+            <inventory>3</inventory>
+            <name>Trail Mix</name>
+            <description>Healthy and energizing trail mix blends for your active lifestyle.</description>
+            <price>0.99</price>
+            <image>imgs/snacks/trail-mix.jpg</image>
+        </product>
+        <product category="chocolatebars">
+            <inventory>3</inventory>
+            <name>Chocolate Bars</name>
+            <description>Indulge in our selection of delicious chocolate bars.</description>
+            <price>0.99</price>
+            <image>imgs/snacks/chocolate-bars.jpg</image>
+        </product>
+    </products>
+</allproducts>

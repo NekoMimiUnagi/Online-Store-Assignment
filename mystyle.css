@@ -1,0 +1,243 @@
+/* Apply the styles to your entire website */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    font-style: Sans-serif;
+    text-align: center;
+    text-shadow: 2px 2px #FF0000;
+    color: white;
+    padding: 20px 0;
+    opacity: 100%;
+    background-image: url("imgs/background.webp");
+}
+
+nav ul {
+    text-align: center;
+    list-style-type: none;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    visibility: visible;
+}
+
+nav ul li a:link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav ul li a:visited {
+    text-decoration: none;
+    color: purple;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    color: black;
+    background: white;
+    font-weight: bold;
+}
+
+nav ul li a:active {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+
+.sidenav {
+    width: 160px;
+    position: sticky;
+    float: left;
+    z-index: 1;
+    top: 10px;
+    background: #f2f2f2;
+    overflow-x: hidden;
+    padding: 8px 0;
+}
+
+.sidenav a {
+    padding-top: 6px;
+    padding-right: 8px;
+    padding-bottom: 6px;
+    padding-left: 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #2196F3;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #064579;
+}
+
+.main {
+    background-image: url("imgs/body-background.jpg");
+    background-repeat: repeat;
+}
+
+.content {
+    width: 76%;
+    margin: 0 160px;
+    background-color: white;
+    padding: 0px 10px;
+}
+
+.product {
+    display: flex;
+}
+
+.product img {
+    flex: 1;
+    width: 30%;
+}
+
+.description {
+    flex: 2;
+    border-style: solid;
+    border-color: #aaa;
+    border-width: 2px;
+}
+
+.add-btn-div {
+    display: flex;
+    margin-left: 5px;
+}
+
+.add-btn-div > label {
+    margin-left: 10px;
+}
+
+.cartext {
+    position: absolute;
+    right: 0px;
+    width: 160px;
+    height: 90px;
+}
+
+.cartext p {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.cartext:hover {
+    background-color: #00adef;
+}
+
+.cart {
+    width: 160px;
+    position: sticky;
+    float: right;
+    z-index: 1;
+    top: 10px;
+    margin-top: 90px;
+    margin-bottom: 90px;
+    background: #f2f2f2;
+    overflow-x: hidden;
+    padding: 0px 0;
+    text-align: center;
+}
+
+#clear-cart {
+    display: block;
+    text-align: center;
+}
+
+.cart-item {
+    padding: 4px;
+    display: block;
+    text-align: center;
+}
+
+.cart-item-price {
+    font-size: 15px;
+    text-align: center;
+}
+
+.cart-info {
+    padding: 4px;
+    display: flex;
+}
+
+.cart-item-text {
+    text-align: left;
+    text-color: black;
+    font-size: 15px;
+    width: 65%;
+}
+
+.cart-item-number {
+    text-align: right;
+}
+
+.question-option {
+    display: flex;
+}
+
+.question-options {
+    display: flex;
+}
+
+.search-bar {
+    margin: 5px 15px;
+}
+
+.users-menu {
+    display: flex;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 25px;
+}
+
+p {
+    font-size: 20px;
+}
+
+table, th, td {
+    border: 1px solid;
+    vertical-align: middle;
+    text-align: left;
+}
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    clear: both;
+}
+
+input:invalid {
+    background-color: lightpink;
+}
+

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Baking - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='json' hidden>baking</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#flourandsugar">Flour and Sugar</a>
+        <a href="#bakingmixes">Baking Mixes</a>
+        <a href="#bakingtools">Baking Tools</a>
+        <a href="#piefillings">Pie Fillings</a>
+        <a href="#crusts">Crusts</a>
+        <a href="#puddingmixes">Pudding Mixes</a>
+        <a href="#piepans">Pie Pans</a>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Baking Essentials</h3>
+        <p>Explore our selection of the freshest groceries below:</p>
+        
+        <div class="product" id="flourandsugar" inventory=3>
+            <img src="imgs/baking/flour-and-sugar.jpg" alt="Flour and Sugar">
+            <div class="description">
+                <h4>Flour and Sugar</h4>
+                <p>High-quality flour and sugar for your baking needs.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="bakingmixes" inventory=3>
+            <img src="imgs/baking/baking-mixes.jpg" alt="Baking Mixes">
+            <div class="description">
+                <h4>Baking Mixes</h4>
+                <p>Convenient baking mixes for quick and easy recipes.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="bakingtools" inventory=3>
+            <img src="imgs/baking/baking-tools.jpg" alt="Baking Tools">
+            <div class="description">
+                <h4>Baking Tools</h4>
+                <p>Find the perfect tools and equipment for your baking adventures.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="piefillings" inventory=3>
+            <img src="imgs/baking/pie-fillings.jpg" alt="Pie Fillings">
+            <div class="description">
+                <h4>Pie Fillings</h4>
+                <p>Pie fillings are sweet or savory mixtures of ingredients that are placed inside a pie crust to create a delicious and flavorful center for the baked pastry.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="crusts" inventory=3>
+            <img src="imgs/baking/crusts.jpg" alt="Crusts">
+            <div class="description">
+                <h4>Crusts</h4>
+                <p>Crusts are the outer layers of pastry or dough that encase and support the filling in pies and other baked goods.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="puddingmixes" inventory=3>
+            <img src="imgs/baking/pudding-mixes.jpg" alt="Pudding Mixes">
+            <div class="description">
+                <h4>Pudding Mixes</h4>
+                <p>Pudding mixes are pre-packaged dry or instant formulations of ingredients that, when combined with liquid and heated, create a creamy and sweet dessert pudding.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="piepans" inventory=3>
+            <img src="imgs/baking/pie-pans.jpg" alt="Pie Pans">
+            <div class="description">
+                <h4>Pie Pans</h4>
+                <p>Pie pans are round, shallow baking dishes typically made of metal, glass, or ceramic, used to hold and bake pie crusts and their fillings.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

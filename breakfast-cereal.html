@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Breakfast and Cereal - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='json' hidden>breakfast</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#cereals">The Cereal Shop</a>
+        <a href="#granolabars">Granola Bars</a>
+        <a href="#coffeeandtea">Coffee and Tea</a>
+        <a href="">Pancakes & Waffles</a>
+        <a href="">Breakfast Breads</a>
+        <a href="">Oatmeal & Grits</a>
+        <a href="#allitems">Rollbacks</a>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Breakfast and Cereal Selection</h3>
+        <p>Start your day right with our delicious breakfast and cereal options:</p>
+        
+        <div class="product" id="cereals" inventory=3>
+            <img src="imgs/breakfast/cereals.jpg" alt="Organic Banana">
+            <div class="description">
+                <h4>Cereals</h4>
+                <p>A variety of cereals to choose from, including healthy options.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="granolabars" inventory=3>
+            <img src="imgs/breakfast/granola-bars.jpg" alt="Organic Spinach">
+            <div class="description">
+                <h4>Granola Bars</h4>
+                <p>Convenient and tasty granola bars for a quick snack or breakfast on the go.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="coffeeandtea" inventory=3>
+            <img src="imgs/breakfast/coffee-and-tea.jpg" alt="Coffee and Tea">
+            <div class="description">
+                <h4>Coffee and Tea</h4>
+                <p>Enjoy your morning brew with our selection of coffee and tea.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

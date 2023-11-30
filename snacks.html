@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Snacks - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='xml' hidden>snacks</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#chipsandpretzels">Chips and Pretzels</a>
+        <a href="#trailmix">Trail Mix</a>
+        <a href="#chocolatebars">Chocolate Bars</a>
+        <div class="search-bar">
+            <label for='searchbar'>Press enter to search:</label>
+            <input size=13 id='searchbar' name='searchbar'>
+        </div>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Snacks Galore</h3>
+        <p>Explore our delicious snack options:</p>
+        
+        <div class="product" id="chipsandpretzels" inventory=3>
+            <img src="imgs/snacks/chips-and-pretzels.jpg" alt="Chips and Pretzels">
+            <div class="description">
+                <h4>Chips and Pretzels</h4>
+                <p>A wide variety of savory chips and pretzels for your cravings.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="trailmix" inventory=3>
+            <img src="imgs/snacks/trail-mix.jpg" alt="Trail Mix">
+            <div class="description">
+                <h4>Trail Mix</h4>
+                <p>Healthy and energizing trail mix blends for your active lifestyle.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="chocolatebars" inventory=3>
+            <img src="imgs/snacks/chocolate-bars.jpg" alt="Chocolate Bars">
+            <div class="description">
+                <h4>Chocolate Bars</h4>
+                <p>Indulge in our selection of delicious chocolate bars.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

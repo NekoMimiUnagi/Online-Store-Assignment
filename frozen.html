@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Frozen - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='xml' hidden>frozen</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#pizza">Frozen Pizza</a>
+        <a href="#icecream">Ice Cream</a>
+        <a href="#vegetables">Frozen Vegetables</a>
+        <a href="">Frozen Breakfast</a>
+        <a href="">Frozen Dessert</a>
+        <a href="">Frozen Meals</a>
+        <a href="">Frozen Meat</a>
+        <a href="">Frozen Snacks</a>
+        <a href="#allitems">Rollbacks</a>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Frozen Foods</h3>
+        <p>Discover our wide range of frozen food products:</p>
+        
+        <div class="product" id="pizza" inventory=3>
+            <img src="imgs/frozen/frozen-pizza.jpg" alt="Frozen Pizza">
+            <div class="description">
+                <h4>Frozen Pizza</h4>
+                <p>Delicious frozen pizzas for a quick meal.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="icecream" inventory=3>
+            <img src="imgs/frozen/ice-cream.jpg" alt="Ice Cream">
+            <div class="description">
+                <h4>Ice Cream</h4>
+                <p>Indulge in our creamy and delightful ice cream flavors.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="vegetables" inventory=3>
+            <img src="imgs/frozen/frozen-vegetables.jpg" alt="Frozen Vegetables">
+            <div class="description">
+                <h4>Frozen Vegetables</h4>
+                <p>Convenient and nutritious frozen vegetable options.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

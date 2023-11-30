@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Candy - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='xml' hidden>candy</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#gummybears">Gummy Bears</a>
+        <a href="#chocolatetruffles">Chocolate Truffles</a>
+        <a href="#lollipops">Lollipops</a>
+        <div class="search-bar">
+            <label for='searchbar'>Press enter to search:</label>
+            <input size=13 id='searchbar' name='searchbar'>
+        </div>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Delicious Candy Selection</h3>
+        <p>Indulge in our wide variety of sweet treats:</p>
+        
+        <div class="product" id="gummybears" inventory=3>
+            <img src="imgs/candy/gummy-bears.jpg" alt="Gummy Bears">
+            <div class="description">
+                <h4>Gummy Bears</h4>
+                <p>Chewy and fruity gummy bears in various flavors.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="chocolatetruffles" inventory=3>
+            <img src="imgs/candy/chocolate-truffles.jpg" alt="Chocolate Truffles">
+            <div class="description">
+                <h4>Chocolate Truffles</h4>
+                <p>Decadent chocolate truffles for a luxurious treat.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="lollipops" inventory=3>
+            <img src="imgs/candy/lollipops.jpg" alt="Lollipops">
+            <div class="description">
+                <h4>Lollipops</h4>
+                <p>Colorful and delightful lollipops for all ages.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

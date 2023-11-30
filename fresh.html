@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <title>Fresh Products - Online Grocery Store</title>
+</head>
+<body>
+    <div id='page-category' filetype='xml' hidden>fresh</div>
+    <div>Time is: <span id='realtime'></span></div>
+    <header>
+        <h1>Welcome to Our Online Grocery Store</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="fresh.html">Fresh Products</a></li>
+            <li><a href="frozen.html">Frozen</a></li>
+            <li><a href="pantry.html">Pantry</a></li>
+            <li><a href="breakfast-cereal.html">Breakfast and Cereal</a></li>
+            <li><a href="baking.html">Baking</a></li>
+            <li><a href="snacks.html">Snacks</a></li>
+            <li><a href="candy.html">Candy</a></li>
+            <li><a href="specialty-shops.html">Specialty Shops</a></li>
+            <li><a href="deals.html">Deals</a></li>
+            <li><a href="my-account.html">My Account</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="sidenav">
+        <a href="#allitems">All Items</a>
+        <a href="#fruits">All Fruits</a>
+        <a href="">Pre-Cut Fruits</a>
+        <a href="#vegetables">All Vegetables</a>
+        <a href="#dairy">Dairy</a>
+        <a href="">Flowers</a>
+        <a href="">Salsa and Dips</a>
+        <a href="">Season Produce</a>
+        <a href="">New Items</a>
+        <a href="#allitems">Rollbacks</a>
+    </div>
+
+    <div class="cartext" id="cart-btn">
+        <p>Cart</p>
+    </div>
+    <div class="cart" id="cart-div" hidden>
+        <button id="clear-cart">Clear Cart</button>
+        <p id="totalprice">Total Price: $0.00</p>
+    </div>
+
+    <div class="content">
+    </div>
+    <!-- <div class="content">
+        <div id='allitems'></div>
+        <h3>Fresh in Grocery</h3>
+        <p>Explore our selection of the freshest groceries below:</p>
+        
+        <div class="product" id="fruits" inventory=3>
+            <img src="imgs/fresh/organic-banana.jpg" alt="Organic Banana">
+            <div class="description">
+                <h4>Organic Banana</h4>
+                <p>Fresh and organic fruits handpicked for you.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="vegetables" inventory=3>
+            <img src="imgs/fresh/organic-spinach.jpg" alt="Organic Spinach">
+            <div class="description">
+                <h4>Organic Spinach</h4>
+                <p>A variety of green and leafy vegetables.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="product" id="dairy" inventory=3>
+            <img src="imgs/fresh/farm-fresh-eggs.jpg" alt="Farm Fresh Eggs">
+            <div class="description">
+                <h4>Farm-Fresh Eggs</h4>
+                <p>Locally sourced, farm-fresh eggs.</p>
+                <p>Price: $0.99</p>
+                <div class="add-btn-div" name="add-item">
+                    <button type="button" name="add-btn">+</button>
+                    <label for="add-btn">Add to Cart</label>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>&copy; 2023 Online Ruosen Li Grocery Store. RXL190028</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
