@@ -4,7 +4,7 @@
         <title>Fresh in Grocery</title>
         <description>Explore our selection of the freshest groceries below:</description>
         <product category="fruits">
-            <inventory>3</inventory>
+            <inventory>0</inventory>
             <name>Organic Banana</name>
             <description>Fresh and organic fruits handpicked for you.</description>
             <price>0.99</price>

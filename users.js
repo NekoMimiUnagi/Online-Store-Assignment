@@ -42,6 +42,7 @@ function users_management(customer_id) {
         data = {'query': query}
         results = view_table(data)
         // TODO: display
+        display(results);
     })
     $(menus[1]).on('click', function() {
         $('#input-month').attr('hidden', 'true')
@@ -72,6 +73,7 @@ function users_management(customer_id) {
         data = {'query': query}
         results = view_table(data)
         // TODO: display
+        display(results);
     })
     $(menus[2]).on('click', function() {
         $('#input-month').removeAttr('hidden')
@@ -105,6 +107,7 @@ function users_management(customer_id) {
         data = {'query': query}
         results = view_table(data)
         // TODO: display
+        display(results);
     })
     $(menus[3]).on('click', function() {
         $('#input-month').attr('hidden', 'true')
@@ -137,5 +140,62 @@ function users_management(customer_id) {
         data = {'query': query}
         results = view_table(data)
         // TODO: display
+        display(results);
+
     })
+
+}
+
+function display(results) {
+    // Parse the JSON data
+    var data = JSON.parse(results);
+
+    // Process data to group by TransactionID
+    var transactions = {};
+    data.forEach(function(item) {
+        if (!transactions[item.TransactionID]) {
+            transactions[item.TransactionID] = {
+                TransactionID: item.TransactionID,
+                TransactionStatus: item.TransactionStatus,
+                Items: []
+            };
+        }
+        transactions[item.TransactionID].Items.push({ ItemNumber: item.ItemNumber, Quantity: item.Quantity });
+    });
+
+    // Get the transactions container
+    var transactionsContainer = document.getElementById('transactionsContainer');
+
+    // Iterate over transactions and create elements
+    Object.values(transactions).forEach(function(transaction) {
+        // Transaction details (not in a table)
+        var transactionDetails = document.createElement('div');
+        transactionDetails.innerHTML = '<strong>Transaction ID:</strong> ' + transaction.TransactionID +
+            '<br><strong>Status:</strong> ' + transaction.TransactionStatus;
+        transactionsContainer.appendChild(transactionDetails);
+
+        // Create a table for transaction items
+        var table = document.createElement('table');
+        table.className = 'table table-bordered mt-3 mb-5';
+
+        // Table head
+        var theadHTML = '<thead><tr>' +
+            '<th>Item Number</th>' +
+            '<th>Quantity</th>' +
+            '</tr></thead>';
+        table.innerHTML = theadHTML;
+
+        // Table body
+        var tbody = document.createElement('tbody');
+        transaction.Items.forEach(function(item) {
+            var row = document.createElement('tr');
+            row.innerHTML = '<td>' + item.ItemNumber + '</td><td>' + item.Quantity + '</td>';
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+
+        // Append the table to the container
+        transactionsContainer.appendChild(table);
+    });
+
 }

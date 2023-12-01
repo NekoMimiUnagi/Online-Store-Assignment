@@ -40,7 +40,7 @@ function view_table(query) {
         url: 'view_table.php',
         data: query,
         success: function (data) {
-            //console.log(data)
+            console.log(data)
             results = data
         }
     })
