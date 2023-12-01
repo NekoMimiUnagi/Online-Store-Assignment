@@ -131,17 +131,15 @@ function read_inventory() {
     return inventory
 }
 
-function write_inventory(inventory) {
-    let inventory_string
-    inventory_string = JSON.stringify(inventory)
+function update_inventory(product) {
     $.ajax({
         async: false,
         global: false,
-        url: 'write_json.php',
-        data: {'data': inventory_string},
+        url: 'update_sql.php',
+        data: product,
         type: 'post',
-        success: function () {
-            console.log('write inventory json success')
+        success: function (data) {
+            console.log('write inventory sql success')
         }
     })
 }
@@ -213,8 +211,7 @@ function create_cart_item(product_info) {
 
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        console.log(inventory_product)
-        let inventory_count = parseInt(inventory_product['Inventory'])
+        let inventory_count = parseInt(inventory_product['Quantity'])
         // remove the item the amount is 0
         if (0 === amount) {
             // update cart xml
@@ -231,8 +228,8 @@ function create_cart_item(product_info) {
             this.parentNode.parentNode.remove()
 
             // update inventory
-            inventory_product['inventory'] = inventory_count + cart_inventory_count
-            write_inventory(inventory)
+            inventory_product['Quantity'] = inventory_count + cart_inventory_count
+            update_inventory(inventory_product)
             return
         }
 
@@ -255,8 +252,8 @@ function create_cart_item(product_info) {
         calTotalPrice()
 
         // update inventory xml
-        inventory_product['inventory'] = inventory_count - diff
-        write_inventory(inventory)
+        inventory_product['Quantity'] = inventory_count - diff
+        update_inventory(inventory_product)
     })
     const item_info = document.createElement('div')
     item_info.className = 'cart-info'
@@ -322,7 +319,7 @@ for (let i = 0; i < buttons.length; ++i) {
         const item_name = this.parentNode.firstElementChild.textContent
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        let inventory_count = parseInt(inventory_product['Inventory'])
+        let inventory_count = parseInt(inventory_product['Quantity'])
 
         // if there is no products, alert customers
         if (0 === inventory_count) {
@@ -333,6 +330,7 @@ for (let i = 0; i < buttons.length; ++i) {
         // if already in cart, add one to the total amount
         const cart = read_cart()
         const cart_product = $(cart).find('name:contains("' + item_name + '")').parent()
+        let product_info
         if (0 !== cart_product.length) {
             const item_div = document.getElementById(item_name)
 
@@ -340,41 +338,33 @@ for (let i = 0; i < buttons.length; ++i) {
             item_div.children[2].children[1].value = parseInt(item_div.children[2].children[1].value) + 1
 
             // update cart xml
-            const product_info = {
+            product_info = {
                 'name': item_name,
                 'count': parseInt(cart_product.children()[1].textContent) + 1,
                 'image': item_div.children[0].getAttribute('src'),
                 'price': item_div.children[1].innerHTML.split('$')[1],
             }
-            update_cart_xml(product_info)
-            calTotalPrice()
+        } else {
+            // create a div for an item
+            product_info = {
+                'name': item_name,
+                'count': 1,
+                'image': this.parentNode.parentNode.children[0].src,
+                'price': this.parentNode.children[2].textContent.split('$')[1],
+            }
 
-            // update inventory
-            inventory_product['Inventory'] = inventory_count - 1
-            write_inventory(inventory)
-            return
+            // update cart
+            const item = create_cart_item(product_info)
+            cart_div.appendChild(item)
         }
-
-        // create a div for an item
-        const product_info = {
-            'name': item_name,
-            'count': 1,
-            'image': this.parentNode.parentNode.children[0].src,
-            'price': this.parentNode.children[2].textContent.split('$')[1],
-        }
-
-        // update cart
-        const item = create_cart_item(product_info)
-        cart_div.appendChild(item)
 
         // update cart xml
         update_cart_xml(product_info)
         calTotalPrice()
 
-        // update inventory xml
-        // update inventory xml
-        inventory_product['inventory'] = inventory_count - 1
-        write_inventory(inventory)
+        // update inventory
+        inventory_product['Quantity'] = inventory_count - 1
+        update_inventory(inventory_product)
     })
 }
 
@@ -393,12 +383,12 @@ clear_cart_button.on('click', function (event) {
         const item_name = children[i].getAttribute('id')
         const amount = parseInt(children[i].children[2].children[1].value)
 
-        // update inventory xml
+        // update inventory sql
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        const inventory_count = parseInt(inventory_product['inventory'])
-        inventory_product['inventory'] = inventory_count + amount
-        write_inventory(inventory)
+        const inventory_count = parseInt(inventory_product['Quantity'])
+        inventory_product['Quantity'] = inventory_count + amount
+        update_inventory(inventory_product)
 
         // update cart xml
         const product_info = {
