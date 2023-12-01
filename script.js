@@ -342,7 +342,7 @@ function create_cart_item(product_info) {
         // check inventory xml, whether there are enough products
         if (diff > inventory_count) {
             alert('Out of stock!')
-            node.value = cart_inventory_count
+            this.value = cart_inventory_count
             return
         }
 
