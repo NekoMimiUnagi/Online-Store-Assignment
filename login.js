@@ -1,3 +1,11 @@
+// real datetime
+function realTime() {
+    const timeDisplay = document.getElementById("realtime");
+    const dateString = new Date().toLocaleString();
+    timeDisplay.textContent = dateString.replace(", ", " - ");
+}
+setInterval(realTime, 1000);
+
 function user_login() {
     let username = document.getElementById('username').value
     let password = document.getElementById('current-password').value
@@ -42,3 +50,10 @@ function user_register() {
     window.location.href = "/registration.html";
     return true
 }
+
+// hide table button
+const hide_button = $('#hide-table')
+hide_button.on('click', function() {
+    $(this).parent().attr('hidden', 'true')
+    $($(this).parent().children()[1]).empty()
+})

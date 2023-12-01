@@ -73,19 +73,16 @@
         <div id='admin-view-inventory'>
             <p>View all inventory:</p>
             <button>Display inventory</button>
-            <div name='display-inventory'></div>
         </div>
         <div id='admin-view-low-inventory'>
             <p>View low inventory products:</p>
             <button>Display low inventory products</button>
-            <div name='display-inventory'></div>
         </div>
         <div id='admin-view-value-customers'>
             <p>Search valuable customers by date:</p>
             <label for="date">Date:</label>
             <input type="date" id="date">
             <button>Display</button>
-            <div name='display-value-customers'></div>
         </div>
         <div id='admin-view-value-customers-by-zip-month'>
             <p>Search valuable customers by zipcode and month:</p>
@@ -94,25 +91,22 @@
             <label for="month">Month:</label>
             <input type="text" id="month">
             <button>Display</button>
-            <div name='display-value-customers'></div>
         </div>
         <div id='admin-update-product-info'>
             <p>Update products:</p>
             <label for="itemnumber">Item Number:</label>
             <input type="text" id="itemnumber">
             <button>Display</button>
-            <br/>
-            <label for="unitprice">Unit Price:</label>
-            <input type="text" id="unitprice">
-            <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity">
-            <button>Update</button>
-            <div name='display-inventory'></div>
+            <!-- <br/> -->
+            <!-- <label for="unitprice">Unit Price:</label> -->
+            <!-- <input type="text" id="unitprice"> -->
+            <!-- <label for="quantity">Quantity:</label> -->
+            <!-- <input type="text" id="quantity"> -->
+            <!-- <button>Update</button> -->
         </div>
         <div id='admin-view-more-value-customers-age-over-20'>
             <p>View most valuable customers:</p>
             <button>Display</button>
-            <div name='display-value-customers'></div>
         </div>
     </div>
 
@@ -136,9 +130,14 @@
             <input type="month" id="input-month" required hidden>
             <input type="text" pattern="^[0-9]{4}$" placeholder="YYYY" id="input-year" required hidden>
         </div>
-        <div id='display-transactions'>
+    </div>
+
+    <br/>
+
+    <div id='display-div' class='content' hidden>
+        <button id='hide-table'>Hide</button>
+        <div id='display-table'>
         </div>
-        <br/>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

@@ -21,6 +21,5 @@ if (!$result) {
 }
 
 // close mysql
-mysqli_free_result($result);
 mysqli_close($link);
 ?>

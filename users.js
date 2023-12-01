@@ -41,6 +41,7 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
+        // TODO: display
     })
     $(menus[1]).on('click', function() {
         $('#input-month').attr('hidden', 'true')
@@ -70,6 +71,7 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
+        // TODO: display
     })
     $(menus[2]).on('click', function() {
         $('#input-month').removeAttr('hidden')
@@ -102,6 +104,7 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
+        // TODO: display
     })
     $(menus[3]).on('click', function() {
         $('#input-month').attr('hidden', 'true')
@@ -133,6 +136,6 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
+        // TODO: display
     })
-    // TODO: display
 }

@@ -223,6 +223,11 @@ p {
     font-size: 20px;
 }
 
+td img {
+    width: 180px;
+    display: block;
+}
+
 table, th, td {
     border: 1px solid;
     vertical-align: middle;

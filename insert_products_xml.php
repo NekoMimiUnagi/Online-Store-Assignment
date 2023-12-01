@@ -4,9 +4,9 @@ $file_name = $_POST['file_name'];
 // read and parse xml file, compose SQL value pairs
 $xml = simplexml_load_file($file_name);
 $values = '';
-foreach ($xml->xpath('//products') as $products) {
+foreach ($xml->products as $products) {
     $category = $products['category'];
-    foreach ($products->xpath('//product') as $product) {
+    foreach ($products->product as $product) {
         $value = "(NULL, '".$product->name."', '".$category."', '".$product['category']."', '".$product->price."', '".$product->inventory."', '".$product->image."', '".$product->description."'),\n";
         $values .= $value;
     }

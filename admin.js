@@ -1,3 +1,36 @@
+function display_table(data, editable=false) {
+    let table = $('<table><tbody>')
+    table.addClass('table')
+    data.forEach(function(d) {
+        let row = $('<tr>')
+        Object.keys(d).forEach(function(key) {
+            let cell
+            if ('Image' === key) {
+                cell = $('<td>')
+                cell.attr('style', 'width:180px')
+                const image = $('<img>')
+                image.attr({
+                    'src': d[key],
+                })
+                cell.append(image)
+            } else {
+                cell = $('<td>').text(d[key])
+                if ('UnitPrice' === key || 'Quantity' === key) {
+                    cell.attr('contenteditable', editable)
+                }
+            }
+            cell.attr('name', key)
+            row.append(cell)
+        })
+        table.append(row)
+    })
+    const display_table = $('#display-table')
+    display_table.empty()
+    display_table.append(table)
+
+    display_table.parent().removeAttr('hidden')
+}
+
 function view_table(query) {
     let results
     $.ajax({
@@ -7,7 +40,7 @@ function view_table(query) {
         url: 'view_table.php',
         data: query,
         success: function (data) {
-            console.log(data)
+            //console.log(data)
             results = data
         }
     })
@@ -81,28 +114,26 @@ function admin_management() {
     let display_btn = $('#admin-view-inventory').children()[1]
     $(display_btn).on('click', function() {
         query = [""
-            ,"SELECT *\n"
+            ,"SELECT ItemNumber, Name, Category, UnitPrice, Quantity, Image\n"
             ,"FROM inventory;"
         ].join("")
         data = {'query': query}
-        results = view_table(data)
-        console.log(JSON.parse(results))
+        let results = view_table(data)
+        display_table(JSON.parse(results))
     })
-    // TODO: display
 
     // view low inventory products
     display_btn = $('#admin-view-low-inventory').children()[1]
     $(display_btn).on('click', function() {
         query = [""
-            ,"SELECT *\n"
+            ,"SELECT ItemNumber, Name, Category, UnitPrice, Quantity, Image\n"
             ,"FROM inventory\n"
             ,"WHERE Quantity < 3;"
         ].join("")
         data = {'query': query}
         results = view_table(data)
-        console.log(JSON.parse(results))
+        display_table(JSON.parse(results))
     })
-    // TODO: display
 
     // view value customers by date
     display_btn = $('#admin-view-value-customers').children()[3]
@@ -151,37 +182,37 @@ function admin_management() {
         ].join("")
         data = {'query': query}
         results = view_table(data)
-        console.log(JSON.parse(results))
+        display_table(JSON.parse(results))
     })
-    // TODO: display
 
     // view low inventory products
     display_btn = $('#admin-update-product-info').children()[3]
     $(display_btn).on('click', function() {
+        let item_number = $('#itemnumber').val()
+
         query = [""
-            ,"SELECT *\n"
-            ,"FROM inventory;"
-        ].join("")
-        data = {'query': query}
-        results = view_table(data)
-        console.log(JSON.parse(results))
-    })
-    // TODO: display
-    update_btn = $('#admin-update-product-info').children()[9]
-    $(update_btn).on('click', function() {
-        // TODO: get corresponding line and info based on UI
-        unit_price = '0.99'
-        quantity = '3'
-        item_number = '0'
-        query = [""
-            ,"UPDATE inventory\n"
-            ,"SET\n"
-            ,"    UnitPrice = '" + unit_price + "',\n"
-            ,"    Quantity = '" + quantity + "'\n"
+            ,"SELECT ItemNumber, Name, Category, UnitPrice, Quantity, Image\n"
+            ,"FROM inventory\n"
             ,"WHERE ItemNumber=" + item_number + ";"
         ].join("")
         data = {'query': query}
-        update_table(data)
+        results = view_table(data)
+        display_table(JSON.parse(results), editable=true)
+
+        $('tr').on('blur', 'td[contenteditable]', function() {
+            attr = $(this).attr('contenteditable')
+            item_number = $(this).parent().children(':first-child').text()
+            let update_name = $(this).attr('name')
+            let update_value = $(this).text()
+            query = [""
+                ,"UPDATE inventory\n"
+                ,"SET\n"
+                ,"    " + update_name +" = " + update_value + "\n"
+                ,"WHERE ItemNumber=" + item_number + ";"
+            ].join("")
+            data = {'query': query}
+            update_table(data)
+        })
     })
 
     // view more valuable customers agve over 20
@@ -203,7 +234,6 @@ function admin_management() {
         ].join("")
         data = {'query': query}
         results = view_table(data)
-        console.log(JSON.parse(results))
+        display_table(JSON.parse(results))
     })
-    // TODO: display
 }
