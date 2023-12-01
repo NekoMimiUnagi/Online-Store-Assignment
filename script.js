@@ -47,17 +47,17 @@ function validateInput() {
     }
 }
 
-function build_product_div_xml(product) {
+function build_product_div(product) {
     const product_div = document.createElement('div')
-    product_div.id = product.getAttribute('category')
+    product_div.id = product['Subcategory']
     product_div.setAttribute('class', 'product')
-    const inventory_number = product.getElementsByTagName('inventory')[0].textContent
+    const inventory_number = product['Quantity']
     product_div.setAttribute('inventory', inventory_number)
 
     // add image
     const img = document.createElement('img')
-    const img_src = product.getElementsByTagName('image')[0].textContent
-    const product_name = product.getElementsByTagName('name')[0].textContent
+    const img_src = product['Image']
+    const product_name = product['Name']
     img.setAttribute('src', img_src)
     img.setAttribute('alt', product_name)
     product_div.append(img)
@@ -73,13 +73,13 @@ function build_product_div_xml(product) {
 
     // add description
     const description_p = document.createElement('p')
-    description_text = product.getElementsByTagName('description')[0].textContent
+    description_text = product['Description']
     description_p.textContent = description_text
     description_div.append(description_p)
 
     // add price
     const price_p = document.createElement('p')
-    price_text = product.getElementsByTagName('price')[0].textContent
+    price_text = product['UnitPrice']
     price_p.textContent = 'Price: $' + price_text
     description_div.append(price_p)
 
@@ -95,83 +95,7 @@ function build_product_div_xml(product) {
     return product_div
 }
 
-function build_products_div_xml(category, xmlDoc) {
-    // get products by category
-    const products_category = $(xmlDoc).find("products[category='"+category+"']")
-
-    // create products descriptions
-    const products_div = $('.content')
-    products_div.empty()
-
-    const allitems_tag = $('<div>').attr({'id': 'allitems'})
-    products_div.append(allitems_tag)
-
-    const title_h3 = $('<h3>').text(products_category.find('title').text())
-    products_div.append(title_h3)
-
-    const description_p = $('<p>').text(products_category.children('description').text())
-    products_div.append(description_p)
-
-    // create product divs
-    const products = products_category.find('product')
-    for (let i = 0; i < products.length; ++i) {
-        const product_div = build_product_div_xml(products[i])
-        products_div.append(product_div)
-    }
-}
-
-function build_product_div_json(product) {
-    const product_div = document.createElement('div')
-    product_div.id = product['category']
-    product_div.setAttribute('class', 'product')
-    const inventory_number = product['inventory']
-    product_div.setAttribute('inventory', inventory_number)
-
-    // add image
-    const img = document.createElement('img')
-    const img_src = product['image']
-    const product_name = product['name']
-    img.setAttribute('src', img_src)
-    img.setAttribute('alt', product_name)
-    product_div.append(img)
-
-    // create description div
-    const description_div = document.createElement('div')
-    description_div.setAttribute('class', 'description')
-
-    // add title
-    const title_h4 = document.createElement('h4')
-    title_h4.textContent = product_name
-    description_div.append(title_h4)
-
-    // add description
-    const description_p = document.createElement('p')
-    description_text = product['description']
-    description_p.textContent = description_text
-    description_div.append(description_p)
-
-    // add price
-    const price_p = document.createElement('p')
-    price_text = product['price']
-    price_p.textContent = 'Price: $' + price_text
-    description_div.append(price_p)
-
-    // add button directly
-    description_div.innerHTML +=
-        '<div class="add-btn-div">' +
-        '    <button type="button" id="add-btn">+</button>' +
-        '    <label for="add-btn">Add to Cart</label>' +
-        '</div>'
-
-    product_div.append(description_div)
-
-    return product_div
-}
-
-function build_products_div_json(category, products_inventory) {
-    // get products by category
-    const products_category = products_inventory[category]
-
+function build_products_div(category, products_inventory) {
     // create fresh products descriptions
     const products_div = $('.content')
     products_div.empty()
@@ -179,34 +103,29 @@ function build_products_div_json(category, products_inventory) {
     const allitems_tag = $('<div>').attr({'id': 'allitems'})
     products_div.append(allitems_tag)
 
-    const title_h3 = $('<h3>').text(products_category['title'])
+    const title_h3 = $('<h3>').text(category)
     products_div.append(title_h3)
 
-    const description_p = $('<p>').text(products_category['description'])
-    products_div.append(description_p)
+//    const description_p = $('<p>').text(products_category['description'])
+//    products_div.append(description_p)
 
     // create product divs
-    const products = products_category['products']
-    for (let i = 0; i < products.length; ++i) {
-        const product_div = build_product_div_json(products[i])
+    for (let i = 0; i < products_inventory.length; ++i) {
+        const product_div = build_product_div(products_inventory[i])
         products_div.append(product_div)
     }
 }
 
 const page_category = $('#page-category')
-const file_type = page_category.attr('filetype')
 function read_inventory() {
     let inventory = null;
     $.ajax({
         async: false,
         global: false,
-        url: 'read_' + file_type + '.php',
+        url: 'read_sql.php',
+        data: {'category': page_category.text()},
         success: function (data) {
-            if('xml' === file_type) {
-                inventory = $.parseXML(data)
-            } else {
-                inventory = JSON.parse(data)
-            }
+            inventory = JSON.parse(data)
         }
     })
     return inventory
@@ -214,35 +133,22 @@ function read_inventory() {
 
 function write_inventory(inventory) {
     let inventory_string
-    if ('xml' === file_type) {
-        const s = new XMLSerializer()
-        inventory_string = s.serializeToString(inventory)
-    } else {
-        inventory_string = JSON.stringify(inventory)
-    }
+    inventory_string = JSON.stringify(inventory)
     $.ajax({
         async: false,
         global: false,
-        url: 'write_' + file_type + '.php',
+        url: 'write_json.php',
         data: {'data': inventory_string},
         type: 'post',
         success: function () {
-            if ('xml' === file_type) {
-                console.log('write inventory xml success')
-            } else {
-                console.log('write inventory json success')
-            }
+            console.log('write inventory json success')
         }
     })
 }
 
 // restore inventory from file
 const inventory = read_inventory()
-if ('xml' === file_type) {
-    build_products_div_xml(page_category.text(), inventory)
-} else if ('json' === file_type) {
-    build_products_div_json(page_category.text(), inventory)
-}
+build_products_div(page_category.text(), inventory)
 
 // create cart div
 const cart_div = document.getElementById('cart-div')
@@ -307,12 +213,8 @@ function create_cart_item(product_info) {
 
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        let inventory_count
-        if ('xml' === file_type) {
-            inventory_count = parseInt(inventory_product.textContent)
-        } else {
-            inventory_count = parseInt(inventory_product['inventory'])
-        }
+        console.log(inventory_product)
+        let inventory_count = parseInt(inventory_product['Inventory'])
         // remove the item the amount is 0
         if (0 === amount) {
             // update cart xml
@@ -329,11 +231,7 @@ function create_cart_item(product_info) {
             this.parentNode.parentNode.remove()
 
             // update inventory
-            if ('xml' === file_type) {
-                inventory_product.textContent = inventory_count + cart_inventory_count
-            } else {
-                inventory_product['inventory'] = inventory_count + cart_inventory_count
-            }
+            inventory_product['inventory'] = inventory_count + cart_inventory_count
             write_inventory(inventory)
             return
         }
@@ -357,11 +255,7 @@ function create_cart_item(product_info) {
         calTotalPrice()
 
         // update inventory xml
-        if ('xml' === file_type) {
-            inventory_product.textContent = inventory_count - diff
-        } else {
-            inventory_product['inventory'] = inventory_count - diff
-        }
+        inventory_product['inventory'] = inventory_count - diff
         write_inventory(inventory)
     })
     const item_info = document.createElement('div')
@@ -412,18 +306,12 @@ restore_cart_from_xml(read_cart())
 
 function get_inventory_product(inventory, item_name) {
     let target_product = null
-    if ('xml' === file_type) {
-        target_product = $(inventory).find('name:contains("' + item_name + '")').parent().children()[0]
-    } else {
-        $.each(inventory, function(category, node) {
-            if (null !== target_product) return
-            for (let product of node['products']) {
-                if (item_name === product['name']) {
-                    target_product = product
-                }
-            }
-        })
-    }
+    $.each(inventory, function(category, node) {
+        if (null !== target_product) return
+        if (item_name === node['Name']) {
+            target_product = node
+        }
+    })
     return target_product
 }
 
@@ -432,15 +320,9 @@ const buttons = document.getElementsByClassName("add-btn-div")
 for (let i = 0; i < buttons.length; ++i) {
     buttons[i].addEventListener('click', function() {
         const item_name = this.parentNode.firstElementChild.textContent
-        // const inventory = this.parentNode.parentNode.getAttribute('inventory')
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        let inventory_count
-        if ('xml' === file_type) {
-            inventory_count = parseInt(inventory_product.textContent)
-        } else {
-            inventory_count = parseInt(inventory_product['inventory'])
-        }
+        let inventory_count = parseInt(inventory_product['Inventory'])
 
         // if there is no products, alert customers
         if (0 === inventory_count) {
@@ -467,12 +349,8 @@ for (let i = 0; i < buttons.length; ++i) {
             update_cart_xml(product_info)
             calTotalPrice()
 
-            // update inventory xml
-            if ('xml' === file_type) {
-                inventory_product.textContent = inventory_count - 1
-            } else {
-                inventory_product['inventory'] = inventory_count - 1
-            }
+            // update inventory
+            inventory_product['Inventory'] = inventory_count - 1
             write_inventory(inventory)
             return
         }
@@ -495,11 +373,7 @@ for (let i = 0; i < buttons.length; ++i) {
 
         // update inventory xml
         // update inventory xml
-        if ('xml' === file_type) {
-            inventory_product.textContent = inventory_count - 1
-        } else {
-            inventory_product['inventory'] = inventory_count - 1
-        }
+        inventory_product['inventory'] = inventory_count - 1
         write_inventory(inventory)
     })
 }
@@ -522,13 +396,8 @@ clear_cart_button.on('click', function (event) {
         // update inventory xml
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
-        if ('xml' === file_type) {
-            const inventory_count = parseInt(inventory_product.textContent)
-            inventory_product.textContent = inventory_count + amount
-        } else {
-            const inventory_count = parseInt(inventory_product['inventory'])
-            inventory_product['inventory'] = inventory_count + amount
-        }
+        const inventory_count = parseInt(inventory_product['inventory'])
+        inventory_product['inventory'] = inventory_count + amount
         write_inventory(inventory)
 
         // update cart xml

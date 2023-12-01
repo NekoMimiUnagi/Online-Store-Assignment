@@ -1,4 +1,4 @@
-function display_table(data, editable=false) {
+function create_table(data, editable=false) {
     let table = $('<table><tbody>')
     table.addClass('table')
     data.forEach(function(d) {
@@ -24,6 +24,12 @@ function display_table(data, editable=false) {
         })
         table.append(row)
     })
+    return table
+}
+
+function display_table(data, editable=false) {
+    table = create_table(data, editable)
+
     const display_table = $('#display-table')
     display_table.empty()
     display_table.append(table)
