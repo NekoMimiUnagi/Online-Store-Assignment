@@ -147,8 +147,21 @@ function users_management(customer_id) {
 }
 
 function display(results) {
+    // to do
+    // when results is null
+
+    console.log("start displaying")
     // Parse the JSON data
     var data = JSON.parse(results);
+    console.log(data)
+    // Check if the array is empty
+    if (data.length === 0) {
+        console.log("Array is empty. Exiting the function.");
+        return; // Exit the function
+    }
+
+    // Continue with the rest of the function if the array is not empty
+    console.log("Processing array...");
 
     // Process data to group by TransactionID
     var transactions = {};
@@ -165,37 +178,44 @@ function display(results) {
 
     // Get the transactions container
     var transactionsContainer = document.getElementById('transactionsContainer');
-
+    transactionsContainer.innerHTML = '';
+    console.log(transactions)
     // Iterate over transactions and create elements
     Object.values(transactions).forEach(function(transaction) {
         // Transaction details (not in a table)
+        console.log("start transaction")
         var transactionDetails = document.createElement('div');
         transactionDetails.innerHTML = '<strong>Transaction ID:</strong> ' + transaction.TransactionID +
             '<br><strong>Status:</strong> ' + transaction.TransactionStatus;
         transactionsContainer.appendChild(transactionDetails);
 
-        // Create a table for transaction items
-        var table = document.createElement('table');
-        table.className = 'table table-bordered mt-3 mb-5';
 
-        // Table head
-        var theadHTML = '<thead><tr>' +
-            '<th>Item Number</th>' +
-            '<th>Quantity</th>' +
-            '</tr></thead>';
-        table.innerHTML = theadHTML;
-
-        // Table body
-        var tbody = document.createElement('tbody');
+        let myItem = [];
         transaction.Items.forEach(function(item) {
-            var row = document.createElement('tr');
-            row.innerHTML = '<td>' + item.ItemNumber + '</td><td>' + item.Quantity + '</td>';
-            tbody.appendChild(row);
-        });
-        table.appendChild(tbody);
+            // query the sql
+            query = [""
+                ,"SELECT ItemNumber, Name, Category, UnitPrice, Quantity, Image\n"
+                ,"FROM inventory\n"
+                ,"WHERE ItemNumber=" + item.ItemNumber + ";"
+            ].join("")
+            console.log(query)
+            data = {'query': query}
+            item_info = view_table(data)
+            console.log(item_info)
 
+            const item_arr = JSON.parse(item_info);
+            cur_item = item_arr[0]
+            cur_item.Quantity = item.Quantity // use cart quantity
+            myItem.push(cur_item)
+
+
+        });
+        // table.appendChild(tbody);
+        console.log(myItem);
+        let table = create_table(myItem);
+        console.log(table)
         // Append the table to the container
-        transactionsContainer.appendChild(table);
+        $(transactionsContainer).append(table);
     });
 
 }
