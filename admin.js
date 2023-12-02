@@ -78,6 +78,16 @@ function admin_management() {
         // show login UI
         const content = $('#content')
         content.removeAttr('hidden')
+        // clean current user info
+        $.ajax({
+            async: false,
+            global: false,
+            method: 'post',
+            url: 'clear_user_info_json.php',
+            success: function (data) {
+                console.log(data)
+            }
+        })
     })
 
     // add inventory function

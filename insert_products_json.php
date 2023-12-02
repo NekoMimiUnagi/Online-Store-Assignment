@@ -27,7 +27,11 @@ if (!mysqli_select_db($link, 'assignment5')) {
 }
 
 // insert to inventory
-$query = "INSERT INTO inventory\nVALUES\n".rtrim($values, ",\n").";";
+$query = "
+INSERT INTO inventory
+VALUES
+    ".rtrim($values, ",\n").";
+";
 $result = mysqli_query($link, $query);
 if ($result) {
     echo 'success';

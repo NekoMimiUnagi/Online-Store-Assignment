@@ -37,6 +37,34 @@ function user_login() {
     if (flag) {
         const content = $('#content')
         content.attr('hidden', true)
+
+        // create transaction
+        $.ajax({
+            async: false,
+            global: false,
+            method: 'post',
+            url: 'insert_transaction.php',
+            success: function (data) {
+                transaction_id = data
+            }
+        })
+        // create login user info
+        const user_info = {
+            'CustomerID': customer_id,
+            'TransactionID': transaction_id
+        }
+        // record customerID and transactionID in the local file
+        $.ajax({
+            async: false,
+            global: false,
+            method: 'post',
+            url: 'write_user_info_json.php',
+            data: {'user_info': user_info},
+            success: function (data) {
+                console.log(data)
+            }
+        })
+      
         if ('admin' === username) {
             admin_management()
         } else {
@@ -57,3 +85,28 @@ hide_button.on('click', function() {
     $(this).parent().attr('hidden', 'true')
     $($(this).parent().children()[1]).empty()
 })
+
+// check login status
+$.ajax({
+    async: false,
+    global: false,
+    method: 'post',
+    url: 'read_user_info_json.php',
+    success: function (data) {
+        if ("" === data) {
+            return
+        }
+        const content = $('#content')
+        content.attr('hidden', true)
+
+        data = JSON.parse(data)
+        if ('1' === data['CustomerID']) {
+            // admin
+            admin_management()
+        } else {
+            // users
+            users_management(data['CustomerID'])
+        }
+    }
+})
+

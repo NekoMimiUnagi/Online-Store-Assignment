@@ -5,11 +5,21 @@ function users_management(customer_id) {
     // logout button
     const logout_btn = $('#users-logout')
     logout_btn.on('click', function() {
-        // hidden admin
+        // hidden users
         users_div.attr('hidden', true)
         // show login UI
         const content = $('#content')
         content.removeAttr('hidden')
+        // clean current user info
+        $.ajax({
+            async: false,
+            global: false,
+            method: 'post',
+            url: 'clear_user_info_json.php',
+            success: function (data) {
+                console.log(data)
+            }
+        })
     })
 
     // update button text
