@@ -188,7 +188,6 @@ function update_cart_sql(product_json) {
         type: 'post',
         data: {'user_info': user_info, 'product_info': product_json},
         success: function(data) {
-            console.log(data)
             console.log('update cart success')
         },
     })
@@ -199,7 +198,7 @@ function calTotalPrice() {
     let total_price = 0.00
     for (let item of cart.children) {
         if ('Total Price:' === item.textContent.slice(0, 12)) continue
-        if ('Clear Cart' === item.textContent) continue
+        if ('cart-buttons' === item.className) continue
         const item_price = parseFloat(item.children[1].textContent)
         const item_count = parseInt(item.children[2].children[1].value)
         total_price += item_price * item_count
@@ -219,7 +218,6 @@ function calTotalPrice() {
             'total_price': total_price
         },
         success: function(data) {
-            console.log(data)
             console.log('update transaction success')
         },
     })
@@ -343,7 +341,6 @@ function read_cart(user_info) {
         url: 'read_cart_sql.php',
         data: user_info,
         success: function(data) {
-            console.log(data)
             cart_json = JSON.parse(data)
         }
     })
@@ -442,8 +439,7 @@ cart_button.addEventListener('mouseenter', function() {
     }
 })
 
-const clear_cart_button = $('#clear-cart')
-clear_cart_button.on('click', function (event) {
+function clear_cart(clear_price=true) {
     const children = cart_div.children
     // delete from the last item to the first item
     for (let i = children.length - 1; i >= 2; --i) {
@@ -469,7 +465,60 @@ clear_cart_button.on('click', function (event) {
         // update cart
         cart_div.removeChild(children[i])
     }
-    calTotalPrice()
+    if (clear_price) {
+        calTotalPrice()
+    }
+}
+
+const clear_cart_button = $('#clear-cart')
+clear_cart_button.on('click', clear_cart)
+
+const checkout_button = $('#submit-cart')
+checkout_button.on('click', function() {
+    // change transaction status
+    let user_info = check_user_info()
+    $.ajax({
+        async: false,
+        global: false,
+        url: 'update_transaction_status.php',
+        method: 'post',
+        data: {
+            'TransactionID': user_info['TransactionID'],
+            'status': 'SHOPPED'
+        },
+        success: function (data) {
+            console.log(data)
+        }
+    })
+
+    // clear cart
+    clear_cart(clear_price=false)
+
+    // create transaction
+    let transaction_id
+    $.ajax({
+        async: false,
+        global: false,
+        method: 'post',
+        url: 'insert_transaction.php',
+        success: function (data) {
+            transaction_id = data
+        }
+    })
+
+    // change current user status
+    user_info['TransactionID'] = transaction_id
+    // record customerID and transactionID in the local file
+    $.ajax({
+        async: false,
+        global: false,
+        method: 'post',
+        url: 'write_user_info_json.php',
+        data: {'user_info': user_info},
+        success: function (data) {
+            console.log(data)
+        }
+    })
 })
 
 // display items by selecting a tag

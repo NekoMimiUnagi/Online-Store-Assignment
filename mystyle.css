@@ -164,6 +164,10 @@ nav ul li a:active {
     text-align: center;
 }
 
+.cart-buttons {
+    display: flex;
+}
+
 .cart-item {
     padding: 4px;
     display: block;

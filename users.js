@@ -51,7 +51,6 @@ function users_management(customer_id) {
             ,"    ORDER BY it.TransactionDate DESC\n"
             ,"    LIMIT 1);"
         ].join("")
-        console.log(query)
         data = {'query': query}
         results = view_table(data)
         display(results);
@@ -81,7 +80,6 @@ function users_management(customer_id) {
             ,"    ORDER BY it.TransactionDate DESC\n"
             ,"    );"
         ].join("")
-        console.log(query)
         data = {'query': query}
         results = view_table(data)
         display(results);
@@ -114,7 +112,6 @@ function users_management(customer_id) {
             ,"    ORDER BY it.TransactionDate DESC\n"
             ,"    );"
         ].join("")
-        console.log(query)
         data = {'query': query}
         results = view_table(data)
         display(results);
@@ -146,7 +143,6 @@ function users_management(customer_id) {
             ,"    ORDER BY it.TransactionDate DESC\n"
             ,"    );"
         ].join("")
-        console.log(query)
         data = {'query': query}
         results = view_table(data)
         display(results);
@@ -162,7 +158,6 @@ function display(results) {
     console.log("start displaying")
     // Parse the JSON data
     var data = JSON.parse(results);
-    console.log(data)
     // Check if the array is empty
     if (data.length === 0) {
         console.log("Array is empty. Exiting the function.");
@@ -185,7 +180,6 @@ function display(results) {
         transactions[item.TransactionID].Items.push({ ItemNumber: item.ItemNumber, Quantity: item.Quantity });
     });
 
-    console.log(transactions)
     // Iterate over transactions and create elements
     Object.values(transactions).forEach(function(transaction) {
         // Transaction details (not in a table)
@@ -204,10 +198,8 @@ function display(results) {
                 ,"FROM inventory\n"
                 ,"WHERE ItemNumber=" + item.ItemNumber + ";"
             ].join("")
-            console.log(query)
             data = {'query': query}
             item_info = view_table(data)
-            console.log(item_info)
 
             const item_arr = JSON.parse(item_info);
             cur_item = item_arr[0]
@@ -217,9 +209,7 @@ function display(results) {
 
         });
         // table.appendChild(tbody);
-        console.log(myItem);
         let table = create_table(myItem);
-        console.log(table)
         // Append the table to the container
         $(transactionsContainer).append(table);
     });

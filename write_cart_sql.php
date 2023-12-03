@@ -2,8 +2,6 @@
 // parse post json product and extract elements
 $user_info = $_POST['user_info'];
 $product_info = $_POST['product_info'];
-print_r($user_info);
-print_r($product_info);
 
 // connect mysql
 $link = @mysqli_connect('localhost', 'root', '', 'assignment5', '3306');
@@ -59,7 +57,6 @@ VALUES
     (".$user_info['CustomerID'].", ".$user_info['TransactionID'].", ".$product_info['item_number'].", ".$product_info['count'].", 'IN_CART');
     ";
 }
-echo $query;
 $result = mysqli_query($link, $query);
 if (!$result) {
     exit(mysqli_error($link));

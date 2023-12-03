@@ -39,6 +39,7 @@ function user_login() {
         content.attr('hidden', true)
 
         // create transaction
+        let transaction_id
         $.ajax({
             async: false,
             global: false,
