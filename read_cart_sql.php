@@ -1,0 +1,44 @@
+<?php
+$customer_id = $_GET['CustomerID'];
+$transaction_id = $_GET['TransactionID'];
+
+// connect mysql
+$link = @mysqli_connect('localhost', 'root', '', 'assignment5', '3306');
+if (!$link) {
+    exit(mysqli_connect_error());
+}
+// set utf-8
+if (!mysqli_set_charset($link, 'utf8')) {
+    exit(mysqli_error($link));
+}
+// select db
+if (!mysqli_select_db($link, 'assignment5')) {
+    exit(mysqli_error($link));
+}
+
+// query
+$query = "
+SELECT i.ItemNumber, i.Name, c.Quantity, i.Image, i.UnitPrice
+FROM
+    cart c
+    JOIN inventory i
+    ON c.ItemNumber = i.ItemNumber
+WHERE
+    c.CustomerID = ".$customer_id." AND
+    c.TransactionID = ".$transaction_id.";
+";
+$result = mysqli_query($link, $query);
+if (!$result) {
+    exit(mysqli_error($link));
+}
+$list = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $list[] = $row;
+}
+$js_array = json_encode($list);
+echo $js_array;
+
+// close mysql
+mysqli_free_result($result);
+mysqli_close($link);
+?>

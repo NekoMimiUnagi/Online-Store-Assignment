@@ -51,6 +51,7 @@ function build_product_div(product) {
     const product_div = document.createElement('div')
     product_div.id = product['Subcategory']
     product_div.setAttribute('class', 'product')
+    product_div.setAttribute('item-number', product['ItemNumber'])
     const inventory_number = product['Quantity']
     product_div.setAttribute('inventory', inventory_number)
 
@@ -122,7 +123,7 @@ function read_inventory() {
     $.ajax({
         async: false,
         global: false,
-        url: 'read_sql.php',
+        url: 'read_inventory_sql.php',
         data: {'category': page_category.text()},
         success: function (data) {
             inventory = JSON.parse(data)
@@ -135,7 +136,7 @@ function update_inventory(product) {
     $.ajax({
         async: false,
         global: false,
-        url: 'update_sql.php',
+        url: 'update_inventory_sql.php',
         data: product,
         type: 'post',
         success: function (data) {
@@ -148,20 +149,40 @@ function update_inventory(product) {
 const inventory = read_inventory()
 build_products_div(page_category.text(), inventory)
 
+// check user info
+function check_user_info() {
+    let user_info
+    $.ajax({
+        async: false,
+        global: false,
+        url: 'read_user_info_json.php',
+        success: function (data) {
+            if ('' === data) {
+                user_info = {'CustomerID': '0', 'TransactionID': '0'}
+            } else {
+                user_info = JSON.parse(data)
+            }
+        }
+    })
+    return user_info
+}
+
 // create cart div
 const cart_div = document.getElementById('cart-div')
 cart_div.addEventListener('mouseleave', function() {
     cart_div.hidden = true
 })
 
-function update_cart_xml(product_json) {
+function update_cart_sql(product_json) {
+    const user_info = check_user_info()
     $.ajax({
         async: false,
         global: false,
-        url: 'write_cart.php',
+        url: 'write_cart_sql.php',
         type: 'post',
-        data: product_json,
-        success: function() {
+        data: {'user_info': user_info, 'product_info': product_json},
+        success: function(data) {
+            console.log(data)
             console.log('update cart success')
         },
     })
@@ -177,10 +198,25 @@ function calTotalPrice() {
         const item_count = parseInt(item.children[2].children[1].value)
         total_price += item_price * item_count
     }
-    
     total_price = Math.round(total_price * 100) / 100
     const total_price_div = document.getElementById('totalprice') 
     total_price_div.textContent = total_price_div.textContent.slice(0, 14) + total_price
+
+    const user_info = check_user_info()
+    $.ajax({
+        async: false,
+        global: false,
+        url: 'update_total_price_sql.php',
+        type: 'post',
+        data: {
+            'TransactionID': user_info['TransactionID'],
+            'total_price': total_price
+        },
+        success: function(data) {
+            console.log(data)
+            console.log('update transaction success')
+        },
+    })
 }
 
 function create_cart_item(product_info) {
@@ -205,9 +241,16 @@ function create_cart_item(product_info) {
         const amount = parseInt(this.value)
         const item_name = this.parentNode.firstElementChild.textContent
 
-        const cart = read_cart()
-        const cart_product = $(cart).find('name:contains("' + item_name + '")').parent()
-        const cart_inventory_count = parseInt(cart_product.children()[1].textContent)
+        // find item in cart
+        const cart = read_cart(check_user_info())
+        let cart_product
+        for (let i = 0; i < cart.length; ++i) {
+            if (item_name === cart[i]['Name']) {
+                cart_product = cart[i]
+                break
+            }
+        }
+        const cart_inventory_count = parseInt(cart_product['Quantity'])
 
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
@@ -216,15 +259,13 @@ function create_cart_item(product_info) {
         if (0 === amount) {
             // update cart xml
             const product_info = {
-                'name': item_name,
+                'item_number': inventory_product['ItemNumber'],
                 'count': 0,
-                'image': this.parentNode.parentNode.children[0].getAttribute('src'),
-                'price': this.parentNode.parentNode.children[1].innerHTML.split('$')[1],
             }
-            update_cart_xml(product_info)
+            update_cart_sql(product_info)
             calTotalPrice()
 
-            // update cart
+            // update cart UI
             this.parentNode.parentNode.remove()
 
             // update inventory
@@ -243,18 +284,17 @@ function create_cart_item(product_info) {
 
         // update cart xml
         const product_info = {
-            'name': item_name,
+            'item_number': inventory_product['ItemNumber'],
             'count': amount,
-            'image': this.parentNode.parentNode.children[0].getAttribute('src'),
-            'price': this.parentNode.parentNode.children[1].innerHTML.split('$')[1],
         }
-        update_cart_xml(product_info)
+        update_cart_sql(product_info)
         calTotalPrice()
 
         // update inventory xml
         inventory_product['Quantity'] = inventory_count - diff
         update_inventory(inventory_product)
     })
+
     const item_info = document.createElement('div')
     item_info.className = 'cart-info'
     item_info.appendChild(item_text)
@@ -271,14 +311,15 @@ function create_cart_item(product_info) {
 }
 
 // restore cart items
-function restore_cart_from_xml(data) {
-    const root = data.children[0].children
-    for (const node of root) {
+function restore_cart_from_json(data) {
+    for (let i = 0; i < data.length; ++i) {
+        const node = data[i]
         const product_info = {
-            'name': node.children[0].textContent,
-            'count': node.children[1].textContent,
-            'image': node.children[2].textContent,
-            'price': node.children[3].textContent
+            'item_number': node['ItemNumber'],
+            'name': node['Name'],
+            'count': node['Quantity'],
+            'image': node['Image'],
+            'price': node['UnitPrice']
         }
         const item = create_cart_item(product_info)
         cart_div.appendChild(item)
@@ -286,20 +327,27 @@ function restore_cart_from_xml(data) {
     calTotalPrice()
 }
 
-function read_cart() {
-    let cart_xml = null
+function read_cart(user_info) {
+    console.log(user_info)
+    let cart_json = null
     $.ajax({
         async: false,
         global: false,
         type: 'get',
-        url: 'read_cart.php',
+        url: 'read_cart_sql.php',
+        data: user_info,
         success: function(data) {
-            cart_xml = $.parseXML(data)
+            console.log(data)
+            cart_json = JSON.parse(data)
         }
     })
-    return cart_xml
+    return cart_json
 }
-restore_cart_from_xml(read_cart())
+
+const user_info = check_user_info()
+if ('0' !== user_info['CustomerID']) {
+    restore_cart_from_json(read_cart(user_info))
+}
 
 function get_inventory_product(inventory, item_name) {
     let target_product = null
@@ -316,6 +364,12 @@ function get_inventory_product(inventory, item_name) {
 const buttons = document.getElementsByClassName("add-btn-div")
 for (let i = 0; i < buttons.length; ++i) {
     buttons[i].addEventListener('click', function() {
+        const user_info = check_user_info()
+        if ('0' === user_info['CustomerID']) {
+            alert('Please login first!')
+            return
+        }
+
         const item_name = this.parentNode.firstElementChild.textContent
         const inventory = read_inventory()
         const inventory_product = get_inventory_product(inventory, item_name)
@@ -328,10 +382,18 @@ for (let i = 0; i < buttons.length; ++i) {
         }
 
         // if already in cart, add one to the total amount
-        const cart = read_cart()
-        const cart_product = $(cart).find('name:contains("' + item_name + '")').parent()
-        let product_info
-        if (0 !== cart_product.length) {
+        const cart = read_cart(user_info)
+        console.log(cart)
+        let cart_product = null
+        for (let i = 0; i < cart.length; ++i) {
+            if (item_name === cart[i]['Name']) {
+                cart_product = cart[i]
+                break
+            }
+        }
+        let product_info = null
+        if (null !== cart_product) {
+            console.log(cart_product)
             const item_div = document.getElementById(item_name)
 
             // update cart
@@ -339,14 +401,13 @@ for (let i = 0; i < buttons.length; ++i) {
 
             // update cart xml
             product_info = {
-                'name': item_name,
-                'count': parseInt(cart_product.children()[1].textContent) + 1,
-                'image': item_div.children[0].getAttribute('src'),
-                'price': item_div.children[1].innerHTML.split('$')[1],
+                'item_number': cart_product['ItemNumber'],
+                'count': parseInt(cart_product['Quantity']) + 1,
             }
         } else {
             // create a div for an item
             product_info = {
+                'item_number': inventory_product['ItemNumber'],
                 'name': item_name,
                 'count': 1,
                 'image': this.parentNode.parentNode.children[0].src,
@@ -359,7 +420,7 @@ for (let i = 0; i < buttons.length; ++i) {
         }
 
         // update cart xml
-        update_cart_xml(product_info)
+        update_cart_sql(product_info)
         calTotalPrice()
 
         // update inventory
@@ -392,17 +453,15 @@ clear_cart_button.on('click', function (event) {
 
         // update cart xml
         const product_info = {
-            'name': item_name,
+            'item_number': inventory_product['ItemNumber'],
             'count': 0,
-            'image': children[i].children[0].textContent,
-            'price': children[i].children[1].textContent
         }
-        update_cart_xml(product_info)
-        calTotalPrice()
+        update_cart_sql(product_info)
 
         // update cart
         cart_div.removeChild(children[i])
     }
+    calTotalPrice()
 })
 
 // display items by selecting a tag

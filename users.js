@@ -51,7 +51,6 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
-        // TODO: display
         display(results);
     })
     $(menus[1]).on('click', function() {
@@ -82,7 +81,6 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
-        // TODO: display
         display(results);
     })
     $(menus[2]).on('click', function() {
@@ -116,7 +114,6 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
-        // TODO: display
         display(results);
     })
     $(menus[3]).on('click', function() {
@@ -149,16 +146,15 @@ function users_management(customer_id) {
         console.log(query)
         data = {'query': query}
         results = view_table(data)
-        // TODO: display
         display(results);
-
     })
 
 }
 
 function display(results) {
-    // to do
-    // when results is null
+    // Get the transactions container
+    var transactionsContainer = document.getElementById('transactionsContainer');
+    transactionsContainer.innerHTML = '';
 
     console.log("start displaying")
     // Parse the JSON data
@@ -186,9 +182,6 @@ function display(results) {
         transactions[item.TransactionID].Items.push({ ItemNumber: item.ItemNumber, Quantity: item.Quantity });
     });
 
-    // Get the transactions container
-    var transactionsContainer = document.getElementById('transactionsContainer');
-    transactionsContainer.innerHTML = '';
     console.log(transactions)
     // Iterate over transactions and create elements
     Object.values(transactions).forEach(function(transaction) {
