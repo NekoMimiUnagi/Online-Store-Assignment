@@ -10,6 +10,9 @@ function users_management(customer_id) {
         // show login UI
         const content = $('#content')
         content.removeAttr('hidden')
+        // hidden display
+        const display_div = $('#display-div')
+        display_div.attr('hidden', 'true')
         // clean current user info
         $.ajax({
             async: false,
