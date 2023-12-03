@@ -150,6 +150,23 @@ function users_management(customer_id) {
 
 }
 
+function check_user_info() {
+    let user_info
+    $.ajax({
+        async: false,
+        global: false,
+        url: 'read_user_info_json.php',
+        success: function (data) {
+            if ('' === data) {
+                user_info = {'CustomerID': '0', 'TransactionID': '0'}
+            } else {
+                user_info = JSON.parse(data)
+            }
+        }
+    })
+    return user_info
+}
+
 function display(results) {
     // Get the transactions container
     var transactionsContainer = document.getElementById('transactionsContainer');
@@ -186,8 +203,35 @@ function display(results) {
         console.log("start transaction")
         var transactionDetails = document.createElement('div');
         transactionDetails.innerHTML = '<strong>Transaction ID:</strong> ' + transaction.TransactionID +
-            '<br><strong>Status:</strong> ' + transaction.TransactionStatus;
+            '<br><strong>Status:</strong> ' + '<div>'+transaction.TransactionStatus+'</div>';
         transactionsContainer.appendChild(transactionDetails);
+        // add a button
+        // on a function
+        var cancel_button = $('<button/>', {
+            text: 'Cancel Order', // Text on the button
+            class: 'newButton',
+        });
+
+        cancel_button.on('click', function() {
+            // change the transcation status
+            console.log($(this).parent().children(":first-child").children(":nth-child(4)").text());
+            $(this).parent().children(":first-child").children(":nth-child(4)").text("CANCELLED")
+            // change transaction status
+            let user_info = check_user_info()
+            $.ajax({
+                async: false,
+                global: false,
+                url: 'update_transaction_status.php',
+                method: 'post',
+                data: {
+                    'TransactionID': user_info['TransactionID'],
+                    'status': 'CANCELLED'
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        })
 
 
         let myItem = [];
@@ -211,6 +255,7 @@ function display(results) {
         // table.appendChild(tbody);
         let table = create_table(myItem);
         // Append the table to the container
+        $(transactionsContainer).append(cancel_button);
         $(transactionsContainer).append(table);
     });
 
