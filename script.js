@@ -118,13 +118,19 @@ function build_products_div(category, products_inventory) {
 }
 
 const page_category = $('#page-category')
-function read_inventory() {
+function read_inventory(all=false) {
+    let data = {}
+    if (!all) {
+        data = {'category': page_category.text()}
+    } else {
+        data = {'category': 'all'}
+    }
     let inventory = null;
     $.ajax({
         async: false,
         global: false,
         url: 'read_inventory_sql.php',
-        data: {'category': page_category.text()},
+        data: data,
         success: function (data) {
             inventory = JSON.parse(data)
         }
@@ -445,8 +451,10 @@ clear_cart_button.on('click', function (event) {
         const amount = parseInt(children[i].children[2].children[1].value)
 
         // update inventory sql
-        const inventory = read_inventory()
+        const inventory = read_inventory(all=true)
+        console.log(inventory, item_name)
         const inventory_product = get_inventory_product(inventory, item_name)
+        console.log(inventory_product)
         const inventory_count = parseInt(inventory_product['Quantity'])
         inventory_product['Quantity'] = inventory_count + amount
         update_inventory(inventory_product)

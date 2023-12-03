@@ -16,10 +16,16 @@ if (!mysqli_select_db($link, 'assignment5')) {
 }
 
 // search for product in the specific inventory
+$condition = "";
+if ('all' == $category) {
+    $condition = "1";
+} else {
+    $condition = "category='".$category."'";
+}
 $query = "
 SELECT *
 FROM inventory
-WHERE category='".$category."';
+WHERE ".$condition.";
 ";
 $result = mysqli_query($link, $query);
 if (!$result) {
