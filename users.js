@@ -196,6 +196,7 @@ function display(results) {
         }
         transactions[item.TransactionID].Items.push({ ItemNumber: item.ItemNumber, Quantity: item.Quantity });
     });
+    console.log(transactions)
 
     // Iterate over transactions and create elements
     Object.values(transactions).forEach(function(transaction) {
@@ -214,8 +215,12 @@ function display(results) {
 
         cancel_button.on('click', function() {
             // change the transcation status
-            console.log($(this).parent().children(":first-child").children(":nth-child(4)").text());
-            $(this).parent().children(":first-child").children(":nth-child(4)").text("CANCELLED")
+            console.log($(this).parent().children(":nth-child(4)").text());
+            let status_node = $(this).parent().children(":nth-child(4)")
+            if ("IN_CART" !== status_node.text()) {
+                return
+            }
+            status_node.text("CANCELLED")
             // change transaction status
             let user_info = check_user_info()
             $.ajax({
@@ -255,8 +260,8 @@ function display(results) {
         // table.appendChild(tbody);
         let table = create_table(myItem);
         // Append the table to the container
-        $(transactionsContainer).append(cancel_button);
-        $(transactionsContainer).append(table);
+        $(transactionDetails).append(cancel_button);
+        $(transactionDetails).append(table);
     });
 
 }

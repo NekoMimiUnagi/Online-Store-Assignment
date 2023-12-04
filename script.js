@@ -439,33 +439,36 @@ cart_button.addEventListener('mouseenter', function() {
     }
 })
 
-function clear_cart(clear_price=true) {
+function clear_cart(checkout=false) {
+    console.log(checkout)
     const children = cart_div.children
     // delete from the last item to the first item
     for (let i = children.length - 1; i >= 2; --i) {
-        const item_name = children[i].getAttribute('id')
-        const amount = parseInt(children[i].children[2].children[1].value)
+        if (false === checkout) {
+            const item_name = children[i].getAttribute('id')
+            const amount = parseInt(children[i].children[2].children[1].value)
 
-        // update inventory sql
-        const inventory = read_inventory(all=true)
-        console.log(inventory, item_name)
-        const inventory_product = get_inventory_product(inventory, item_name)
-        console.log(inventory_product)
-        const inventory_count = parseInt(inventory_product['Quantity'])
-        inventory_product['Quantity'] = inventory_count + amount
-        update_inventory(inventory_product)
+            // update inventory sql
+            const inventory = read_inventory(all=true)
+            console.log(inventory, item_name)
+            const inventory_product = get_inventory_product(inventory, item_name)
+            console.log(inventory_product)
+            const inventory_count = parseInt(inventory_product['Quantity'])
+            inventory_product['Quantity'] = inventory_count + amount
+            update_inventory(inventory_product)
 
-        // update cart xml
-        const product_info = {
-            'item_number': inventory_product['ItemNumber'],
-            'count': 0,
+            // update cart xml
+            const product_info = {
+                'item_number': inventory_product['ItemNumber'],
+                'count': 0,
+            }
+            update_cart_sql(product_info)
         }
-        update_cart_sql(product_info)
 
         // update cart
         cart_div.removeChild(children[i])
     }
-    if (clear_price) {
+    if (false === checkout) {
         calTotalPrice()
     }
 }
@@ -492,7 +495,7 @@ checkout_button.on('click', function() {
     })
 
     // clear cart
-    clear_cart(clear_price=false)
+    clear_cart(checkout=true)
 
     // create transaction
     let transaction_id
@@ -507,6 +510,7 @@ checkout_button.on('click', function() {
     })
 
     // change current user status
+    console.log(transaction_id)
     user_info['TransactionID'] = transaction_id
     // record customerID and transactionID in the local file
     $.ajax({
